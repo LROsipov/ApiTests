@@ -5,9 +5,16 @@ import io.restassured.response.Response;
 import lombok.Getter;
 import org.apache.commons.lang3.tuple.Pair;
 import site.stellarburgers.dto.LoginJson;
+import site.stellarburgers.dto.OrderJson;
 import site.stellarburgers.dto.UserJson;
 import site.stellarburgers.factory.RandomUser;
 import site.stellarburgers.steps.ApiSteps;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static site.stellarburgers.steps.ApiSteps.getIngredients;
+import static site.stellarburgers.steps.ApiSteps.takeIdIngredients;
 
 
 @Getter
@@ -33,5 +40,14 @@ public class BaseTest {
         String token = ApiSteps.takeToken(response);
         Pair<String, UserJson> pair = Pair.of(token, userJson);
         return pair;
+    }
+
+    @Step("Генерируем данные для заказа")
+    public static OrderJson generateOrderData() {
+        apiSteps = new ApiSteps();
+        List<String> ingredients = new ArrayList<>();
+        ingredients.add(takeIdIngredients(getIngredients()));
+        OrderJson orderJson = new OrderJson(ingredients);
+        return orderJson;
     }
 }

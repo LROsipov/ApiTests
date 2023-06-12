@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public enum ErrorMessage {
+    INGREDIENTS_FAIL("Ingredient ids must be provided"),
     CHANGE_EMAIL_FAIL("User with such email already exists"),
     CHANGE_FAIL("You should be authorised"),
     LOGIN_FAIL("email or password are incorrect"),

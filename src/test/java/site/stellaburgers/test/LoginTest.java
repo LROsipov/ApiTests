@@ -1,10 +1,10 @@
 package site.stellaburgers.test;
 
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.After;
 import org.junit.Test;
-import io.qameta.allure.junit4.DisplayName;
 import site.stellarburgers.dto.LoginJson;
 import site.stellarburgers.steps.ApiSteps;
 
@@ -33,7 +33,7 @@ public class LoginTest {
     }
 
     @Test
-    @DisplayName("Логин с неверным логином")
+    @DisplayName("Логин с неверной почтой")
     public void LoginUserNotEmailTest() {
         pair = generateLoginUser();
         LoginJson loginJson = pair.getRight();
@@ -65,7 +65,6 @@ public class LoginTest {
 
     @After
     public void clean() {
-        String token = pair.getLeft();
-        ApiSteps.sendDelete(token);
+        ApiSteps.sendDelete(pair.getLeft());
     }
 }

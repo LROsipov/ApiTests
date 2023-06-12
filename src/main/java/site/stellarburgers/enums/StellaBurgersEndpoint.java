@@ -8,6 +8,7 @@ public enum StellaBurgersEndpoint implements Endpoint {
     LOGIN("auth/login"),
     USER("auth/user"),
     ORDERS("orders"),
+    INGREDIENTS("ingredients"),
     REGISTRATION("auth/register");
     private final String endpoint;
 

@@ -1,9 +1,9 @@
 package site.stellaburgers.test;
 
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Test;
-import io.qameta.allure.junit4.DisplayName;
 import site.stellarburgers.dto.UserJson;
 import site.stellarburgers.factory.RandomUser;
 import site.stellarburgers.steps.ApiSteps;
@@ -15,7 +15,7 @@ import static site.stellarburgers.enums.ErrorMessage.INVALID_USER;
 
 @DisplayName("Создание пользователя")
 public class RegistrationTest extends BaseTest {
-    ApiSteps apiSteps = new ApiSteps();
+    private ApiSteps apiSteps = new ApiSteps();
     private Response userResponse;
 
     @Test
@@ -46,7 +46,7 @@ public class RegistrationTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("Создание пользователя,без пароля")
+    @DisplayName("Создание пользователя без пароля")
     public void createUserNotPasswordTest() {
         UserJson userJson = RandomUser.getRandomUser();
         userJson.setPassword("");
@@ -60,7 +60,7 @@ public class RegistrationTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("Создание пользователя,без имени")
+    @DisplayName("Создание пользователя без имени")
     public void createUserNotNameTest() {
         UserJson userJson = RandomUser.getRandomUser();
         userJson.setName("");
