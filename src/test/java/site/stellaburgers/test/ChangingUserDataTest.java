@@ -11,7 +11,7 @@ import site.stellarburgers.steps.ApiSteps;
 import static io.qameta.allure.Allure.step;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static site.stellarburgers.enums.ErrorMessage.CHANGE_EMAIL_FAIL;
-import static site.stellarburgers.enums.ErrorMessage.CHANGE_FAIL;
+import static site.stellarburgers.enums.ErrorMessage.AUTHORISED_FAIL;
 
 @DisplayName("Изменение данных пользователя")
 public class ChangingUserDataTest extends BaseTest {
@@ -28,7 +28,7 @@ public class ChangingUserDataTest extends BaseTest {
             userResponse.then().statusCode(401);
         });
         step("Проверяем [message] в теле ответ", () -> {
-            userResponse.then().assertThat().body("message", equalTo(CHANGE_FAIL.getMessage()));
+            userResponse.then().assertThat().body("message", equalTo(AUTHORISED_FAIL.getMessage()));
         });
     }
 

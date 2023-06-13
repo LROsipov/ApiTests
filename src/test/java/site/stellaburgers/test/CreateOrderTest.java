@@ -14,6 +14,7 @@ import java.util.List;
 
 import static io.qameta.allure.Allure.step;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static site.stellarburgers.enums.ErrorMessage.AUTHORISED_FAIL;
 import static site.stellarburgers.enums.ErrorMessage.INGREDIENTS_FAIL;
 
 
@@ -42,10 +43,10 @@ public class CreateOrderTest extends BaseTest {
         pair = generateRegistrationUser();
         userResponse = ApiSteps.createOrder(generateOrderData(), "");
         step("Проверяем статус код", () -> {
-            userResponse.then().statusCode(200);
+            userResponse.then().statusCode(401);
         });
-        step("Проверяем что тело ответа  содержит [success] со значением true", () -> {
-            userResponse.then().assertThat().body("success", equalTo(true));
+        step("Проверяем [message] в теле ответ", () -> {
+            userResponse.then().assertThat().body("message", equalTo(AUTHORISED_FAIL.getMessage()));
         });
     }
 
