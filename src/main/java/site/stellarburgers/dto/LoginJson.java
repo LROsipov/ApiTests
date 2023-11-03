@@ -14,6 +14,9 @@ public class LoginJson {
     private String password;
 
     public static LoginJson from(UserJson userJson) {
-        return new LoginJson(userJson.getEmail(), userJson.getPassword());
+        return LoginJson.builder()
+                .email(userJson.getEmail())
+                .password(userJson.getPassword())
+                .build();
     }
 }
