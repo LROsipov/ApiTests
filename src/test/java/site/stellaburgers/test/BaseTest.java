@@ -8,46 +8,35 @@ import site.stellarburgers.dto.LoginJson;
 import site.stellarburgers.dto.OrderJson;
 import site.stellarburgers.dto.UserJson;
 import site.stellarburgers.factory.RandomUser;
-import site.stellarburgers.steps.ApiSteps;
+import site.stellarburgers.steps.AuthorizationApiSteps;
+import site.stellarburgers.steps.OrderApiSteps;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static site.stellarburgers.steps.ApiSteps.getIngredients;
-import static site.stellarburgers.steps.ApiSteps.takeIdIngredients;
+import static site.stellarburgers.steps.OrderApiSteps.*;
 
 
 @Getter
 public class BaseTest {
-    protected static ApiSteps apiSteps;
+    protected static OrderApiSteps orderApiSteps = new OrderApiSteps();
+    protected static AuthorizationApiSteps authorizationApiSteps = new AuthorizationApiSteps();
 
-    @Step("Генерируем данные для логина")
+    @Step("Сгенерировать данные для логина")
     public static Pair<String, LoginJson> generateLoginUser() {
         UserJson userJson = RandomUser.getRandomUser();
-        apiSteps = new ApiSteps();
-        Response response = apiSteps.sendUserRegistration(userJson);
-        LoginJson loginJson = LoginJson.from(userJson);
-        String token = ApiSteps.takeToken(response);
-        Pair<String, LoginJson> pair = Pair.of(token, loginJson);
-        return pair;
+        Response response = authorizationApiSteps.sendUserRegistration(userJson);
+        return Pair.of(authorizationApiSteps.takeToken(response), LoginJson.from(userJson));
     }
 
-    @Step("Генерируем данные для регистрации")
+    @Step("Сгенерировать данные для регистрации")
     public static Pair<String, UserJson> generateRegistrationUser() {
-        apiSteps = new ApiSteps();
         UserJson userJson = RandomUser.getRandomUser();
-        Response response = apiSteps.sendUserRegistration(userJson);
-        String token = ApiSteps.takeToken(response);
-        Pair<String, UserJson> pair = Pair.of(token, userJson);
-        return pair;
+        Response response = authorizationApiSteps.sendUserRegistration(userJson);
+        return Pair.of(authorizationApiSteps.takeToken(response), userJson);
     }
 
-    @Step("Генерируем данные для заказа")
+    @Step("Сгенерировать данные для заказа")
     public static OrderJson generateOrderData() {
-        apiSteps = new ApiSteps();
-        List<String> ingredients = new ArrayList<>();
-        ingredients.add(takeIdIngredients(getIngredients()));
-        OrderJson orderJson = new OrderJson(ingredients);
-        return orderJson;
+        return new OrderJson(List.of(takeIdFirstIngredients(getIngredients())));
     }
 }

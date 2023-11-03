@@ -4,9 +4,10 @@ import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
 import site.stellarburgers.dto.UserJson;
 import site.stellarburgers.factory.RandomUser;
-import site.stellarburgers.steps.ApiSteps;
+import site.stellarburgers.steps.OrderApiSteps;
 
 import static io.qameta.allure.Allure.step;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -15,14 +16,14 @@ import static site.stellarburgers.enums.ErrorMessage.INVALID_USER;
 
 @DisplayName("Создание пользователя")
 public class RegistrationTest extends BaseTest {
-    private ApiSteps apiSteps = new ApiSteps();
+
     private Response userResponse;
 
     @Test
     @DisplayName("Создание уникального пользователя")
     public void createUserTest() {
         UserJson userJson = RandomUser.getRandomUser();
-        userResponse = apiSteps.sendUserRegistration(userJson);
+        userResponse = authorizationApiSteps.sendUserRegistration(userJson);
         step("Проверяем статус код", () -> {
             userResponse.then().statusCode(200);
         });
@@ -35,8 +36,8 @@ public class RegistrationTest extends BaseTest {
     @DisplayName("Создание пользователя, который уже зарегистрирован")
     public void createAgainUserTest() {
         UserJson userJson = RandomUser.getRandomUser();
-        userResponse = apiSteps.sendUserRegistration(userJson);
-        Response againUserResponse = apiSteps.sendUserRegistration(userJson);
+        userResponse = authorizationApiSteps.sendUserRegistration(userJson);
+        Response againUserResponse = authorizationApiSteps.sendUserRegistration(userJson);
         step("Проверяем статус код", () -> {
             againUserResponse.then().statusCode(403);
         });
@@ -50,7 +51,7 @@ public class RegistrationTest extends BaseTest {
     public void createUserNotPasswordTest() {
         UserJson userJson = RandomUser.getRandomUser();
         userJson.setPassword("");
-        userResponse = apiSteps.sendUserRegistration(userJson);
+        userResponse = authorizationApiSteps.sendUserRegistration(userJson);
         step("Проверяем статус код", () -> {
             userResponse.then().statusCode(403);
         });
@@ -64,7 +65,7 @@ public class RegistrationTest extends BaseTest {
     public void createUserNotNameTest() {
         UserJson userJson = RandomUser.getRandomUser();
         userJson.setName("");
-        userResponse = apiSteps.sendUserRegistration(userJson);
+        userResponse = authorizationApiSteps.sendUserRegistration(userJson);
         step("Проверяем статус код", () -> {
             userResponse.then().statusCode(403);
         });
@@ -75,9 +76,10 @@ public class RegistrationTest extends BaseTest {
 
     @After
     public void clean() {
-        String token = ApiSteps.takeToken(userResponse);
+        String token = authorizationApiSteps.takeToken(userResponse);
         if (token != null) {
-            ApiSteps.sendDelete(token);
+            authorizationApiSteps.sendDelete(token);
         }
     }
+
 }
