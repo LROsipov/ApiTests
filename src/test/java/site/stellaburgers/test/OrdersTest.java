@@ -48,7 +48,7 @@ public class OrdersTest extends BaseTest {
         });
     }
 
-    @AfterEach
+    @After
     public void clean() {
         authorizationApiSteps.sendDelete(pair.getLeft());
     }

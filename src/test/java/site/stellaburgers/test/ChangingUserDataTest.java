@@ -3,6 +3,7 @@ package site.stellaburgers.test;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.tuple.Pair;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
@@ -15,8 +16,8 @@ import static site.stellarburgers.enums.ErrorMessage.AUTHORISED_FAIL;
 
 @DisplayName("Изменение данных пользователя")
 public class ChangingUserDataTest extends BaseTest {
-    Response userResponse;
-    Pair<String, UserJson> pair;
+    private Response userResponse;
+    private Pair<String, UserJson> pair;
 
     @Before
     public void generateTestData() {
@@ -61,7 +62,7 @@ public class ChangingUserDataTest extends BaseTest {
         });
     }
 
-    @AfterEach
+    @After
     public void clean() {
         authorizationApiSteps.sendDelete(pair.getLeft());
     }

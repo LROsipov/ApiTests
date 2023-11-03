@@ -16,7 +16,7 @@ import static site.stellarburgers.enums.ErrorMessage.INVALID_USER;
 
 @DisplayName("Создание пользователя")
 public class RegistrationTest extends BaseTest {
-    private OrderApiSteps orderApiSteps = new OrderApiSteps();
+
     private Response userResponse;
 
     @Test
@@ -74,7 +74,7 @@ public class RegistrationTest extends BaseTest {
         });
     }
 
-    @AfterEach
+    @After
     public void clean() {
         String token = authorizationApiSteps.takeToken(userResponse);
         if (token != null) {

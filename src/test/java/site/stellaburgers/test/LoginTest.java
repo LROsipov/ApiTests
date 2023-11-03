@@ -3,9 +3,9 @@ package site.stellaburgers.test;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.tuple.Pair;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
 import site.stellarburgers.dto.LoginJson;
 
 import static io.qameta.allure.Allure.step;
@@ -63,7 +63,7 @@ public class LoginTest extends BaseTest{
         });
     }
 
-    @AfterEach
+    @After
     public void clean() {
         authorizationApiSteps.sendDelete(pair.getLeft());
     }

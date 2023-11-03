@@ -3,9 +3,9 @@ package site.stellaburgers.test;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.tuple.Pair;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
 import site.stellarburgers.dto.OrderJson;
 import site.stellarburgers.dto.UserJson;
 import site.stellarburgers.steps.OrderApiSteps;
@@ -87,7 +87,7 @@ public class CreateOrderTest extends BaseTest {
 
     }
 
-    @AfterEach
+    @After
     public void clean() {
         authorizationApiSteps.sendDelete(pair.getLeft());
     }
