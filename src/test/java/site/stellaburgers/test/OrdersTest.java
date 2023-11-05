@@ -1,14 +1,12 @@
 package site.stellaburgers.test;
 
-import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.tuple.Pair;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
 import site.stellarburgers.dto.UserJson;
-import site.stellarburgers.steps.OrderApiSteps;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.Allure.step;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -19,7 +17,7 @@ import static site.stellarburgers.enums.ErrorMessage.AUTHORISED_FAIL;
 public class OrdersTest extends BaseTest {
     private Response userResponse;
     private Pair<String, UserJson> pair;
-    @Before
+    @BeforeEach
     public void generateTestData() {
         pair = generateRegistrationUser();
     }
@@ -48,7 +46,7 @@ public class OrdersTest extends BaseTest {
         });
     }
 
-    @After
+    @AfterEach
     public void clean() {
         authorizationApiSteps.sendDelete(pair.getLeft());
     }

@@ -2,6 +2,6 @@
 target/
 build/
 .allure/
-allure-results/
+target/allure-results/
 *.iml
 *.log

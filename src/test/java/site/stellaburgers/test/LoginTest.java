@@ -1,12 +1,12 @@
 package site.stellaburgers.test;
 
-import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.tuple.Pair;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 import site.stellarburgers.dto.LoginJson;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.Allure.step;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -18,7 +18,7 @@ public class LoginTest extends BaseTest{
     private Response userResponse;
     private Pair<String, LoginJson> pair;
 
-    @Before
+    @BeforeEach
     public void generateTestData() {
         pair = generateLoginUser();
     }
@@ -63,7 +63,7 @@ public class LoginTest extends BaseTest{
         });
     }
 
-    @After
+    @AfterEach
     public void clean() {
         authorizationApiSteps.sendDelete(pair.getLeft());
     }

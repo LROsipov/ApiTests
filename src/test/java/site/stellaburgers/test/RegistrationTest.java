@@ -1,13 +1,11 @@
 package site.stellaburgers.test;
 
-import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
-import org.junit.After;
-import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
 import site.stellarburgers.dto.UserJson;
 import site.stellarburgers.factory.RandomUser;
-import site.stellarburgers.steps.OrderApiSteps;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.Allure.step;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -74,7 +72,7 @@ public class RegistrationTest extends BaseTest {
         });
     }
 
-    @After
+    @AfterEach
     public void clean() {
         String token = authorizationApiSteps.takeToken(userResponse);
         if (token != null) {

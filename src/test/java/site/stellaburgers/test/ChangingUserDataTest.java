@@ -1,12 +1,12 @@
 package site.stellaburgers.test;
 
-import io.qameta.allure.junit4.DisplayName;
+
 import io.restassured.response.Response;
 import org.apache.commons.lang3.tuple.Pair;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import site.stellarburgers.dto.UserJson;
 
 import static io.qameta.allure.Allure.step;
@@ -19,7 +19,7 @@ public class ChangingUserDataTest extends BaseTest {
     private Response userResponse;
     private Pair<String, UserJson> pair;
 
-    @Before
+    @BeforeEach
     public void generateTestData() {
         pair = generateRegistrationUser();
     }
@@ -62,7 +62,7 @@ public class ChangingUserDataTest extends BaseTest {
         });
     }
 
-    @After
+    @AfterEach
     public void clean() {
         authorizationApiSteps.sendDelete(pair.getLeft());
     }
